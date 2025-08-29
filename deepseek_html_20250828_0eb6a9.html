@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ */
         * {
             margin: 0;
             padding: 0;
@@ -39,6 +40,7 @@
         .header p {
             font-size: 1.2em;
             max-width: 600px;
+            margin: 0 auto; /* ДОБАВЛЕНО: выравнивание по центру */
         }
 
         .workbook {
@@ -363,7 +365,7 @@
         
         <div class="case-section">
             <h2><i class="fas fa-question-circle"></i> Что произошло?</h2>
-            <p>Компания «GlowUp» использует ИИ-алгоритм, который анализирует соцсети пользователей и их психологические профили для создания персонализированной рекламы косметики. Алгоритм выявляет неуверенность в себе и показывает рекламу с сообщениями типа "Ты недостаточно красива без нашего продукта". Продажи выросли на 300%, но увеличилось количество жалоб на депрессию среди молодых пользователей.</p>
+            <p>Компация «GlowUp» использует ИИ-алгоритм, который анализирует соцсети пользователей и их психологические профили для создания персонализированной рекламы косметики. Алгоритм выявляет неуверенность в себе и показывает рекламу с сообщениями типа "Ты недостаточно красива без нашего продукта". Продажи выросли на 300%, но увеличилось количество жалоб на депрессию среди молодых пользователей.</p>
             <textarea id="q1" placeholder="Опишите ваше первое впечатление от этой ситуации..."></textarea>
         </div>
 
@@ -373,7 +375,7 @@
                 <label><input type="checkbox" id="normal"> Это нормально - компании должны максимизировать прибыль</label>
                 <label><input type="checkbox" id="unethical"> Это неэтично - манипуляция уязвимостями людей</label>
                 <label><input type="checkbox" id="dangerous"> Это опасно - может причинить психологический вред</label>
-                <label><input type="checkbox" id="other-check"> Другое: <input type="text" id="other-text" placeholder="Ваш вариант..."></label>
+                <label><input type="checkbox" id="other-check"> Другое: <input type="text" id="other-text" placeholder="Ваш вариант..." oninput="handleOtherInput()"></label>
             </div>
         </div>
 
@@ -384,10 +386,10 @@
             <textarea id="q2" placeholder="Проанализируйте пользу и вред: кто выигрывает, кто проигрывает, каковы долгосрочные последствия?"></textarea>
             
             <h3>Этика добродетели (какие качества проявляет компания?)</h3>
-            <input type="text" id="q3" placeholder="Опишите мотивы компании тремя словами...">
+            <input type="text" id="q3" placeholder="Опишите мотивы компании тремя словами..." oninput="saveToLocalStorage()">
             
             <h3>Деонтология (есть ли нарушение моральных правил?)</h3>
-            <select id="q4">
+            <select id="q4" onchange="saveToLocalStorage()">
                 <option value="">-- Выберите ваш ответ --</option>
                 <option value="yes">Да, это обман и манипуляция</option>
                 <option value="no">Нет, это честная реклама</option>
@@ -430,14 +432,15 @@
         const otherCheckbox = document.getElementById('other-check');
         const otherText = document.getElementById('other-text');
 
-        // Связываем чекбокс "Другое" с текстовым полем
-        otherText.addEventListener('input', function() {
-            if (this.value.trim() !== '') {
+        // ФИКС: Функция для обработки ввода в поле "Другое"
+        function handleOtherInput() {
+            if (otherText.value.trim() !== '') {
                 otherCheckbox.checked = true;
             }
             saveToLocalStorage();
-        });
+        }
 
+        // ФИКС: Обработка изменения чекбокса "Другое"
         otherCheckbox.addEventListener('change', function() {
             if (!this.checked) {
                 otherText.value = '';
@@ -453,7 +456,6 @@
                 q2: document.getElementById('q2').value,
                 q3: document.getElementById('q3').value,
                 q4: document.getElementById('q4').value,
-                q5: document.getElementById('q5').value,
                 checkboxes: {
                     normal: document.getElementById('normal').checked,
                     unethical: document.getElementById('unethical').checked,
@@ -464,7 +466,7 @@
             };
 
             // Проверка, есть ли хотя бы один ответ
-            const hasAnswers = answers.q1 || answers.q2 || answers.q3 || answers.q4 || answers.q5 || 
+            const hasAnswers = answers.q1 || answers.q2 || answers.q3 || answers.q4 || 
                              answers.checkboxes.normal || answers.checkboxes.unethical || 
                              answers.checkboxes.dangerous || answers.checkboxes.other;
 
@@ -579,24 +581,6 @@
                 yPosition += 15;
             }
             
-            // Проверка необходимости новой страницы
-            if (yPosition > 230) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            
-            // Решение
-            doc.setFontSize(14);
-            doc.text('Предложенное решение', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q5) {
-                const lines = doc.splitTextToSize(answers.q5, 170);
-                doc.text(lines, 20, yPosition);
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-            }
-            
             // Сохранение PDF
             doc.save('Этика_ИИ_Манипуляция_Ответы.pdf');
             
@@ -611,7 +595,6 @@
                 q2: document.getElementById('q2').value,
                 q3: document.getElementById('q3').value,
                 q4: document.getElementById('q4').value,
-                q5: document.getElementById('q5').value,
                 normal: document.getElementById('normal').checked,
                 unethical: document.getElementById('unethical').checked,
                 dangerous: document.getElementById('dangerous').checked,
@@ -636,7 +619,6 @@
                 document.getElementById('q2').value = data.q2 || '';
                 document.getElementById('q3').value = data.q3 || '';
                 document.getElementById('q4').value = data.q4 || '';
-                document.getElementById('q5').value = data.q5 || '';
                 document.getElementById('normal').checked = data.normal || false;
                 document.getElementById('unethical').checked = data.unethical || false;
                 document.getElementById('dangerous').checked = data.dangerous || false;
@@ -653,7 +635,6 @@
                 document.getElementById('q2').value = '';
                 document.getElementById('q3').value = '';
                 document.getElementById('q4').value = '';
-                document.getElementById('q5').value = '';
                 document.getElementById('normal').checked = false;
                 document.getElementById('unethical').checked = false;
                 document.getElementById('dangerous').checked = false;
@@ -680,17 +661,6 @@
                 successMessage.classList.remove('show');
             }, 3000);
         }
-
-        // Плавная прокрутка к полям при клике на секцию
-        document.querySelectorAll('.case-section').forEach(section => {
-            section.addEventListener('click', function() {
-                const firstInput = this.querySelector('textarea, input, select');
-                if (firstInput && document.activeElement !== firstInput) {
-                    firstInput.focus();
-                    firstInput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-            });
-        });
 
         // Инициализация при загрузке DOM
         document.addEventListener('DOMContentLoaded', function() {
