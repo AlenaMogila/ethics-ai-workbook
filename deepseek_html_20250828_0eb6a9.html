@@ -1,9 +1,9 @@
-     <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кейс: таргетированная реклама - Решение и рефлексия</title>
+    <title>Этика ИИ: Практикум | Анализ кейса</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -76,11 +76,6 @@
         .case-section {
             padding: 30px;
             border-bottom: 1px solid #f0f0f0;
-            transition: background-color 0.3s ease;
-        }
-
-        .case-section:hover {
-            background-color: #fafafa;
         }
 
         .case-section:last-of-type {
@@ -90,29 +85,16 @@
         h2 {
             color: #2c3e50;
             font-size: 1.4em;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        h3 {
-            color: #34495e;
-            font-size: 1.1em;
-            margin: 20px 0 10px 0;
-            padding: 8px 12px;
-            background: #ecf0f1;
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
-        }
-
         p {
             color: #555;
-            margin-bottom: 15px;
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #17a2b8;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
 
         .solution-grid {
@@ -128,67 +110,15 @@
             border-radius: 15px;
             border: 2px solid #e9ecef;
             border-left: 5px solid #667eea;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .solution-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        .reflection-form {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid #e9ecef;
-            margin: 25px 0;
-        }
-
-        .materials-list {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid #e9ecef;
-            margin: 25px 0;
-        }
-
-        .tutor-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid #e9ecef;
-            margin: 25px 0;
-            font-style: italic;
-        }
-
-        .material-item {
-            margin: 15px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            border-left: 4px solid #28a745;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
-        }
-
-        .material-item:hover {
-            transform: translateX(5px);
-        }
-
-        .material-item strong {
-            color: #2e7d32;
-        }
-
-        .material-link {
-            color: #667eea;
-            text-decoration: none;
-            display: block;
-            margin-top: 5px;
-            font-size: 0.9em;
-        }
-
-        .material-link:hover {
-            text-decoration: underline;
+        h3 {
+            color: #34495e;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         textarea, input[type="text"], select {
@@ -198,19 +128,12 @@
             border-radius: 10px;
             font-family: inherit;
             font-size: 14px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
             margin: 10px 0;
-        }
-
-        textarea {
-            min-height: 120px;
             resize: vertical;
         }
 
-        textarea:focus, input[type="text"]:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        textarea {
+            min-height: 100px;
         }
 
         input[type="text"] {
@@ -223,46 +146,36 @@
             background: white;
         }
 
-        .rating-group {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin: 15px 0;
-            flex-wrap: wrap;
+        textarea:focus, input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .rating-option {
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 15px;
+            gap: 12px;
+            padding: 12px;
             background: #f8f9fa;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            border-radius: 8px;
+            transition: background 0.2s;
         }
 
-        .rating-option:hover {
+        .checkbox-item:hover {
             background: #e9ecef;
-            transform: translateY(-2px);
         }
 
-        .rating-option input[type="radio"] {
+        .checkbox-item input[type="checkbox"] {
             width: 18px;
             height: 18px;
             accent-color: #667eea;
-        }
-
-        .rating-option input[type="radio"]:checked + span {
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .rating-option:has(input[type="radio"]:checked) {
-            background: #667eea;
-            color: white;
-            border-color: #5a67d8;
         }
 
         .buttons {
@@ -280,8 +193,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -303,45 +214,11 @@
             background: #f8f9fa;
             color: #6c757d;
             border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
         }
 
         #resetForm:hover {
             background: #e9ecef;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .anonymous-note {
-            font-size: 13px;
-            color: #6c757d;
-            font-style: italic;
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 3px solid #6c757d;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e9ecef;
-            border-radius: 3px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 3px;
         }
 
         .success-message {
@@ -411,22 +288,9 @@
                 padding: 20px;
             }
 
-            h2 {
-                font-size: 1.2em;
-            }
-            
             .buttons {
                 flex-direction: column;
                 padding: 0 20px 20px;
-            }
-
-            .rating-group {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .rating-option {
-                justify-content: center;
             }
         }
     </style>
@@ -438,115 +302,72 @@
     </div>
     
     <div class="workbook">
-        <h1>💡 Предложите решение</h1>
-        
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
+        <h1>Кейс: таргетированная реклама</h1>
         
         <div class="case-section">
-            <h2><i class="fas fa-user-tie"></i> Вы — совет по этике в «GlowUp»</h2>
+            <h2><i class="fas fa-info-circle"></i> Что произошло?</h2>
+            <p>Компания «GlowUp» использует ИИ-алгоритм, который анализирует соцсети пользователей и их психологические профили для создания персонализированной рекламы косметики.<br><br>
+            Алгоритм выявляет неуверенность в себе и показывает рекламу с сообщениями типа "Ты недостаточно красива без нашего продукта". Продажи выросли на 300%, но увеличилось количество жалоб на депрессию среди молодых пользователей.</p>
+        </div>
+
+        <div class="case-section">
+            <h2><i class="fas fa-balance-scale"></i> В чём дилемма?</h2>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="normal">
+                    <label for="normal">Это нормально - компании должны максимизировать прибыль</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="unethical">
+                    <label for="unethical">Это неэтично - манипуляция уязвимостями людей</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="dangerous">
+                    <label for="dangerous">Это опасно - может причинить психологический вред</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="other-check">
+                    <input type="text" id="other-text" placeholder="Другое (укажите ваш вариант)" style="margin: 0; min-height: auto;">
+                </div>
+            </div>
+        </div>
+
+        <div class="case-section">
+            <h2><i class="fas fa-glasses"></i> Применим философскую оптику</h2>
             
             <div class="solution-grid">
                 <div class="solution-card">
-                    <h3><i class="fas fa-code"></i> 1. Как изменить алгоритм, чтобы он не манипулировал мнением людей?</h3>
-                    <textarea id="algorithm-solution" placeholder="Предложите конкретные изменения в работе ИИ-алгоритма. Например: запретить анализ эмоциональных уязвимостей, добавить позитивные сообщения, ограничить частоту показа рекламы..."></textarea>
+                    <h3><i class="fas fa-chart-line"></i> Утилитаризм (наибольшее благо для наибольшего числа людей)</h3>
+                    <textarea id="q2" placeholder="Проанализируйте пользу и вред: кто выигрывает, кто проигрывает, каковы долгосрочные последствия?"></textarea>
                 </div>
                 
                 <div class="solution-card">
-                    <h3><i class="fas fa-balance-scale"></i> 2. Какие этические принципы должна принять компания?</h3>
-                    <textarea id="ethical-principles" placeholder="Сформулируйте кодекс этики для использования ИИ в рекламе. Какие принципы должны стать обязательными?"></textarea>
+                    <h3><i class="fas fa-shield-alt"></i> Этика добродетели (какие качества проявляет компания?)</h3>
+                    <input type="text" id="q3" placeholder="Опишите мотивы компании тремя словами">
                 </div>
 
                 <div class="solution-card">
-                    <h3><i class="fas fa-shield-alt"></i> 3. Как защитить уязвимые группы пользователей?</h3>
-                    <textarea id="protection-measures" placeholder="Предложите меры защиты для подростков, людей с низкой самооценкой и других уязвимых групп"></textarea>
-                </div>
-
-                <div class="solution-card">
-                    <h3><i class="fas fa-chart-line"></i> 4. Система контроля и мониторинга</h3>
-                    <textarea id="monitoring-system" placeholder="Как компания должна контролировать свои алгоритмы? Кто должен проверить их работу?"></textarea>
+                    <h3><i class="fas fa-gavel"></i> Деонтология (есть ли нарушение моральных правил?)</h3>
+                    <select id="q4">
+                        <option value="">-- Выберите ваш ответ --</option>
+                        <option value="yes">Да, это обман и манипуляция</option>
+                        <option value="no">Нет, это честная реклама</option>
+                        <option value="partial">Частично - зависит от реализации</option>
+                    </select>
                 </div>
             </div>
         </div>
 
         <div class="case-section">
-            <div class="reflection-form">
-                <h2><i class="fas fa-brain"></i> Рефлексия</h2>
-                
-                <h3><i class="fas fa-star"></i> Насколько сложным было это задание?</h3>
-                <div class="rating-group">
-                    <label class="rating-option">
-                        <input type="radio" name="difficulty" value="1">
-                        <span>Очень легко</span>
-                    </label>
-                    <label class="rating-option">
-                        <input type="radio" name="difficulty" value="2">
-                        <span>Легко</span>
-                    </label>
-                    <label class="rating-option">
-                        <input type="radio" name="difficulty" value="3">
-                        <span>Средне</span>
-                    </label>
-                    <label class="rating-option">
-                        <input type="radio" name="difficulty" value="4">
-                        <span>Сложно</span>
-                    </label>
-                    <label class="rating-option">
-                        <input type="radio" name="difficulty" value="5">
-                        <span>Очень сложно</span>
-                    </label>
-                </div>
-
-                <h3><i class="fas fa-question"></i> Что было самым трудным в анализе этого кейса?</h3>
-                <textarea id="difficult-aspect" placeholder="Поделитесь своими размышлениями о том, что вызвало наибольшие затруднения"></textarea>
-
-                <h3><i class="fas fa-exchange-alt"></i> Изменилось ли ваше мнение о роли ИИ в рекламе?</h3>
-                <select id="opinion-change">
-                    <option value="">-- Выберите ответ --</option>
-                    <option value="yes-positive">Да, стал относиться более позитивно</option>
-                    <option value="yes-negative">Да, стал относиться более критично</option>
-                    <option value="no">Нет, мнение не изменилось</option>
-                    <option value="complex">Мнение стало более сложным и нюансированным</option>
-                </select>
-
-                <h3><i class="fas fa-lightbulb"></i> Какие вопросы у вас остались?</h3>
-                <textarea id="remaining-questions" placeholder="Что бы вы хотели узнать дополнительно по этой теме?"></textarea>
-
-                <div class="anonymous-note">
-                    <i class="fas fa-info-circle"></i> Ваши ответы помогают улучшить курс. Все данные обрабатываются анонимно.
-                </div>
-            </div>
-        </div>
-
-        <div class="case-section">
-            <div class="materials-list">
-                <h2><i class="fas fa-book"></i> Дополнительные материалы</h2>
-                
-                <div class="material-item">
-                    <strong><i class="fas fa-file-alt"></i> Статья:</strong> "Основные принципы таргетированной рекламы" 
-                    <a href="#" class="material-link">https://sky.pro/wiki/profession/osnovnye-principy-targetirovannoj-reklamy/</a>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Нарушенные принципы этики</h2>
+                    <textarea id="q5" placeholder="Какой принцип(ы) этики цифровой среды нарушила компания GlowUP?"></textarea>
                 </div>
                 
-                <div class="material-item">
-                    <strong><i class="fas fa-chart-bar"></i> Исследование:</strong> "Психология рекламы и её влияние на подростков исследовательский проект"
-                    <a href="#" class="material-link">https://data.school9-nt.ru/gradeprojects/11/2021/1.pdf</a>
-                </div>
-                
-                <div class="material-item">
-                    <strong><i class="fas fa-briefcase"></i> Кейс:</strong> "Как Facebook изменил алгоритмы после критики" - Практический пример реформ
-                    <a href="#" class="material-link">https://example.com/facebook-algorithm-case</a>
-                </div>
-                
-                <div class="material-item">
-                    <strong><i class="fas fa-video"></i> Новость:</strong> "ИИ и компьютерная этика: когда философия встречается с наукой и технологиями" "Bridging philosophy and AI to explore computing ethics" 
-                    <a href="#" class="material-link">https://www.vietnam.vn/ru/ai-va-dao-duc-may-tinh-khi-triet-hoc-gap-khoa-hoc-ky-thuat</a>
-                    <a href="#" class="material-link">https://news.mit.edu/2025/bridging-philosophy-and-ai-to-explore-computing-ethics-0211</a>
-                </div>
-
-                <div class="material-item">
-                    <strong><i class="fas fa-gamepad"></i> Интерактив:</strong> "Создай свой этический алгоритм" - Симулятор принятия решений
-                    <a href="#" class="material-link">https://example.com/ethics-simulator</a>
+                <div class="solution-card">
+                    <h2><i class="fas fa-ruler-combined"></i> Этические правила для ИИ в рекламе</h2>
+                    <textarea id="q6" placeholder="Какие этические правила должны регулировать использование ИИ в рекламе?"></textarea>
                 </div>
             </div>
         </div>
@@ -570,7 +391,7 @@
     </div>
 
     <footer>
-        <p>© 2025 СТОИК | Для образовательных целей | КИВО-2025</p>
+        <p>© 2025 СТОИК | Для образовательных целей</p>
     </footer>
 
     <script>
@@ -582,250 +403,202 @@
         const autoSaveIndicator = document.getElementById('autoSaveIndicator');
         const savePdfButton = document.getElementById('savePdf');
         const resetFormButton = document.getElementById('resetForm');
+        const otherCheckbox = document.getElementById('other-check');
+        const otherText = document.getElementById('other-text');
 
-        function updateProgress() {
-            const fields = [
-                'algorithm-solution',
-                'ethical-principles', 
-                'protection-measures',
-                'monitoring-system',
-                'difficult-aspect',
-                'remaining-questions'
-            ];
-            
-            const radioGroups = ['difficulty'];
-            const selects = ['opinion-change'];
-            
-            let filledCount = 0;
-            let totalCount = fields.length + radioGroups.length + selects.length;
-            
-            // Check text fields
-            fields.forEach(id => {
-                if (document.getElementById(id).value.trim()) {
-                    filledCount++;
-                }
-            });
-            
-            // Check radio groups
-            radioGroups.forEach(name => {
-                if (document.querySelector(`input[name="${name}"]:checked`)) {
-                    filledCount++;
-                }
-            });
-            
-            // Check selects
-            selects.forEach(id => {
-                if (document.getElementById(id).value) {
-                    filledCount++;
-                }
-            });
-            
-            const progress = (filledCount / totalCount) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
+        // Связываем чекбокс "Другое" с текстовым полем
+        otherText.addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                otherCheckbox.checked = true;
+            }
+            saveToLocalStorage();
+        });
 
+        otherCheckbox.addEventListener('change', function() {
+            if (!this.checked) {
+                otherText.value = '';
+            }
+            saveToLocalStorage();
+        });
+
+        // Функция генерации PDF
         function generatePDF() {
-            // Collect all answers
+            // Сбор всех ответов
             const answers = {
-                algorithmSolution: document.getElementById('algorithm-solution').value,
-                ethicalPrinciples: document.getElementById('ethical-principles').value,
-                protectionMeasures: document.getElementById('protection-measures').value,
-                monitoringSystem: document.getElementById('monitoring-system').value,
-                difficulty: document.querySelector('input[name="difficulty"]:checked')?.value || '',
-                difficultAspect: document.getElementById('difficult-aspect').value,
-                opinionChange: document.getElementById('opinion-change').value,
-                remainingQuestions: document.getElementById('remaining-questions').value
+                q2: document.getElementById('q2').value,
+                q3: document.getElementById('q3').value,
+                q4: document.getElementById('q4').value,
+                q5: document.getElementById('q5').value,
+                q6: document.getElementById('q6').value,
+                checkboxes: {
+                    normal: document.getElementById('normal').checked,
+                    unethical: document.getElementById('unethical').checked,
+                    dangerous: document.getElementById('dangerous').checked,
+                    other: document.getElementById('other-check').checked,
+                    otherText: document.getElementById('other-text').value
+                }
             };
 
-            // Check if at least some answers are provided
-            const hasAnswers = Object.values(answers).some(value => value && value.trim());
+            // Проверка, есть ли хотя бы один ответ
+            const hasAnswers = answers.q2 || answers.q3 || answers.q4 || answers.q5 || 
+                             answers.q6 ||
+                             answers.checkboxes.normal || answers.checkboxes.unethical || 
+                             answers.checkboxes.dangerous || answers.checkboxes.other;
 
             if (!hasAnswers) {
                 alert('Пожалуйста, заполните хотя бы один ответ перед сохранением.');
                 return;
             }
 
-            // Create PDF
+            // Создание PDF
             const doc = new jsPDF();
             
             // Устанавливаем шрифт, поддерживающий кириллицу
             doc.setFont("helvetica");
 
-            // Title
+            // Заголовок
             doc.setFontSize(20);
-            doc.text('Этика ИИ: Решение и рефлексия', 20, 30);
+            doc.text('Этика ИИ: Анализ кейса', 20, 30);
             
-            // Subtitle
-            doc.setFontSize(14);
-            doc.text('Кейс: Манипуляция в рекламе', 20, 40);
-            
-            // Date
+            // Дата
             doc.setFontSize(12);
             const date = new Date().toLocaleDateString('ru-RU');
-            doc.text(`Дата: ${date}`, 20, 50);
+            doc.text(`Дата: ${date}`, 20, 45);
             
             let yPosition = 65;
             
-            // Solutions section
+            // Чекбоксы
             doc.setFontSize(14);
-            doc.text('ПРЕДЛОЖЕННЫЕ РЕШЕНИЯ', 20, yPosition);
-            yPosition += 15;
+            doc.text('В чём дилемма?', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
             
-            // Algorithm solution
-            if (answers.algorithmSolution) {
-                doc.setFontSize(12);
-                doc.text('1. Изменения алгоритма:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines1 = doc.splitTextToSize(answers.algorithmSolution, 170);
-                doc.text(lines1, 20, yPosition);
-                yPosition += lines1.length * 5 + 10;
+            if (answers.checkboxes.normal) {
+                doc.text('✓ Это нормально - компании должны максимизировать прибыль', 20, yPosition);
+                yPosition += 7;
             }
+            if (answers.checkboxes.unethical) {
+                doc.text('✓ Это неэтично - манипуляция уязвимостями людей', 20, yPosition);
+                yPosition += 7;
+            }
+            if (answers.checkboxes.dangerous) {
+                doc.text('✓ Это опасно - может причинить психологический вред', 20, yPosition);
+                yPosition += 7;
+            }
+            if (answers.checkboxes.other && answers.checkboxes.otherText) {
+                doc.text(`✓ Другое: ${answers.checkboxes.otherText}`, 20, yPosition);
+                yPosition += 7;
+            }
+            yPosition += 10;
             
-            // Check if we need a new page
+            // Проверка необходимости новой страницы
             if (yPosition > 250) {
                 doc.addPage();
                 yPosition = 30;
             }
             
-            // Ethical principles
-            if (answers.ethicalPrinciples) {
-                doc.setFontSize(12);
-                doc.text('2. Этические принципы:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines2 = doc.splitTextToSize(answers.ethicalPrinciples, 170);
-                doc.text(lines2, 20, yPosition);
-                yPosition += lines2.length * 5 + 10;
+            // Утилитаризм
+            doc.setFontSize(14);
+            doc.text('Утилитаризм (польза vs вред)', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
+            if (answers.q2) {
+                const lines = doc.splitTextToSize(answers.q2, 170);
+                doc.text(lines, 20, yPosition);
+                yPosition += lines.length * 5 + 10;
+            } else {
+                doc.text('Не заполнено', 20, yPosition);
+                yPosition += 15;
             }
             
-            // Protection measures
-            if (answers.protectionMeasures) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('3. Защита уязвимых групп:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines3 = doc.splitTextToSize(answers.protectionMeasures, 170);
-                doc.text(lines3, 20, yPosition);
-                yPosition += lines3.length * 5 + 10;
+            // Этика добродетели
+            doc.setFontSize(14);
+            doc.text('Этика добродетели (мотивы компании)', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
+            if (answers.q3) {
+                doc.text(answers.q3, 20, yPosition);
+                yPosition += 15;
+            } else {
+                doc.text('Не заполнено', 20, yPosition);
+                yPosition += 15;
             }
             
-            // Monitoring system
-            if (answers.monitoringSystem) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('4. Система контроля:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines4 = doc.splitTextToSize(answers.monitoringSystem, 170);
-                doc.text(lines4, 20, yPosition);
-                yPosition += lines4.length * 5 + 15;
+            // Деонтология
+            doc.setFontSize(14);
+            doc.text('Деонтология (нарушение правил)', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
+            if (answers.q4) {
+                const deontologyAnswers = {
+                    'yes': 'Да, это обман и манипуляция',
+                    'no': 'Нет, это честная реклама',
+                    'partial': 'Частично - зависит от реализации'
+                };
+                doc.text(deontologyAnswers[answers.q4] || answers.q4, 20, yPosition);
+                yPosition += 15;
+            } else {
+                doc.text('Не заполнено', 20, yPosition);
+                yPosition += 15;
             }
             
-            // Reflection section
-            if (yPosition > 200) {
+            // Проверка необходимости новой страницы
+            if (yPosition > 230) {
                 doc.addPage();
                 yPosition = 30;
             }
             
+            // НАРУШЕННЫЕ ПРИНЦИПЫ ЭТИКИ
             doc.setFontSize(14);
-            doc.text('РЕФЛЕКСИЯ', 20, yPosition);
-            yPosition += 15;
-            
-            // Difficulty rating
-            if (answers.difficulty) {
-                doc.setFontSize(12);
-                doc.text('Сложность задания:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const difficultyLabels = {
-                    '1': 'Очень легко',
-                    '2': 'Легко', 
-                    '3': 'Средне',
-                    '4': 'Сложно',
-                    '5': 'Очень сложно'
-                };
-                doc.text(difficultyLabels[answers.difficulty] || answers.difficulty, 20, yPosition);
+            doc.text('Нарушенные принципы этики', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
+            if (answers.q5) {
+                const lines = doc.splitTextToSize(answers.q5, 170);
+                doc.text(lines, 20, yPosition);
+                yPosition += lines.length * 5 + 10;
+            } else {
+                doc.text('Не заполнено', 20, yPosition);
                 yPosition += 15;
             }
             
-            // Difficult aspect
-            if (answers.difficultAspect) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('Самое трудное в анализе:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines5 = doc.splitTextToSize(answers.difficultAspect, 170);
-                doc.text(lines5, 20, yPosition);
-                yPosition += lines5.length * 5 + 10;
+            // ЭТИЧЕСКИЕ ПРАВИЛА ДЛЯ ИИ
+            doc.setFontSize(14);
+            doc.text('Этические правила для ИИ в рекламе', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
+            if (answers.q6) {
+                const lines = doc.splitTextToSize(answers.q6, 170);
+                doc.text(lines, 20, yPosition);
+            } else {
+                doc.text('Не заполнено', 20, yPosition);
             }
             
-            // Opinion change
-            if (answers.opinionChange) {
-                if (yPosition > 240) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('Изменение мнения:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const opinionLabels = {
-                    'yes-positive': 'Да, стал относиться более позитивно',
-                    'yes-negative': 'Да, стал относиться более критично',
-                    'no': 'Нет, мнение не изменилось',
-                    'complex': 'Мнение стало более сложным и нюансированным'
-                };
-                doc.text(opinionLabels[answers.opinionChange] || answers.opinionChange, 20, yPosition);
-                yPosition += 15;
+            // Сохранение PDF
+            try {
+                doc.save('Этика_ИИ_Анализ_кейса.pdf');
+                showSuccessMessage();
+            } catch (error) {
+                console.error('Ошибка при сохранении PDF:', error);
+                alert('Произошла ошибка при сохранении PDF. Пожалуйста, попробуйте еще раз.');
             }
-            
-            // Remaining questions
-            if (answers.remainingQuestions) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('Оставшиеся вопросы:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines6 = doc.splitTextToSize(answers.remainingQuestions, 170);
-                doc.text(lines6, 20, yPosition);
-            }
-            
-            // Save the PDF
-            doc.save('Этика_ИИ_Решение_и_Рефлексия.pdf');
-            
-            // Show success message
-            showSuccessMessage();
         }
 
         // Функция автосохранения
         function saveToLocalStorage() {
             const formData = {
-                algorithmSolution: document.getElementById('algorithm-solution').value,
-                ethicalPrinciples: document.getElementById('ethical-principles').value,
-                protectionMeasures: document.getElementById('protection-measures').value,
-                monitoringSystem: document.getElementById('monitoring-system').value,
-                difficulty: document.querySelector('input[name="difficulty"]:checked')?.value || '',
-                difficultAspect: document.getElementById('difficult-aspect').value,
-                opinionChange: document.getElementById('opinion-change').value,
-                remainingQuestions: document.getElementById('remaining-questions').value
+                q2: document.getElementById('q2').value,
+                q3: document.getElementById('q3').value,
+                q4: document.getElementById('q4').value,
+                q5: document.getElementById('q5').value,
+                q6: document.getElementById('q6').value,
+                normal: document.getElementById('normal').checked,
+                unethical: document.getElementById('unethical').checked,
+                dangerous: document.getElementById('dangerous').checked,
+                otherCheck: document.getElementById('other-check').checked,
+                otherText: document.getElementById('other-text').value
             };
-            localStorage.setItem('ethicsWorkbookSolution', JSON.stringify(formData));
-            updateProgress();
+            localStorage.setItem('ethicsWorkbook', JSON.stringify(formData));
             
             // Показываем индикатор автосохранения
             autoSaveIndicator.classList.add('show');
@@ -834,42 +607,38 @@
             }, 2000);
         }
 
+        // Функция загрузки из localStorage
         function loadFromLocalStorage() {
-            const saved = localStorage.getItem('ethicsWorkbookSolution');
+            const saved = localStorage.getItem('ethicsWorkbook');
             if (saved) {
                 const data = JSON.parse(saved);
-                document.getElementById('algorithm-solution').value = data.algorithmSolution || '';
-                document.getElementById('ethical-principles').value = data.ethicalPrinciples || '';
-                document.getElementById('protection-measures').value = data.protectionMeasures || '';
-                document.getElementById('monitoring-system').value = data.monitoringSystem || '';
-                document.getElementById('difficult-aspect').value = data.difficultAspect || '';
-                document.getElementById('opinion-change').value = data.opinionChange || '';
-                document.getElementById('remaining-questions').value = data.remainingQuestions || '';
-                
-                if (data.difficulty) {
-                    const difficultyRadio = document.querySelector(`input[name="difficulty"][value="${data.difficulty}"]`);
-                    if (difficultyRadio) difficultyRadio.checked = true;
-                }
+                document.getElementById('q2').value = data.q2 || '';
+                document.getElementById('q3').value = data.q3 || '';
+                document.getElementById('q4').value = data.q4 || '';
+                document.getElementById('q5').value = data.q5 || '';
+                document.getElementById('q6').value = data.q6 || '';
+                document.getElementById('normal').checked = data.normal || false;
+                document.getElementById('unethical').checked = data.unethical || false;
+                document.getElementById('dangerous').checked = data.dangerous || false;
+                document.getElementById('other-check').checked = data.otherCheck || false;
+                document.getElementById('other-text').value = data.otherText || '';
             }
-            updateProgress();
         }
 
         // Функция сброса формы
         function resetForm() {
             if (confirm('Вы уверены, что хотите очистить все ответы? Это действие нельзя отменить.')) {
-                localStorage.removeItem('ethicsWorkbookSolution');
-                document.getElementById('algorithm-solution').value = '';
-                document.getElementById('ethical-principles').value = '';
-                document.getElementById('protection-measures').value = '';
-                document.getElementById('monitoring-system').value = '';
-                document.getElementById('difficult-aspect').value = '';
-                document.getElementById('opinion-change').value = '';
-                document.getElementById('remaining-questions').value = '';
-                
-                // Сброс радио-кнопок
-                document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
-                    radio.checked = false;
-                });
+                localStorage.removeItem('ethicsWorkbook');
+                document.getElementById('q2').value = '';
+                document.getElementById('q3').value = '';
+                document.getElementById('q4').value = '';
+                document.getElementById('q5').value = '';
+                document.getElementById('q6').value = '';
+                document.getElementById('normal').checked = false;
+                document.getElementById('unethical').checked = false;
+                document.getElementById('dangerous').checked = false;
+                document.getElementById('other-check').checked = false;
+                document.getElementById('other-text').value = '';
                 
                 // Показываем сообщение об успехе
                 successMessage.innerHTML = '<i class="fas fa-trash"></i> Форма очищена!';
@@ -881,8 +650,6 @@
                     successMessage.innerHTML = '<i class="fas fa-check-circle"></i> PDF успешно сохранён!';
                     successMessage.style.background = '#28a745';
                 }, 3000);
-                
-                updateProgress();
             }
         }
 
@@ -893,17 +660,6 @@
                 successMessage.classList.remove('show');
             }, 3000);
         }
-
-        // Плавная прокрутка к полям при клике на секцию
-        document.querySelectorAll('.case-section').forEach(section => {
-            section.addEventListener('click', function() {
-                const firstInput = this.querySelector('textarea, input, select');
-                if (firstInput && document.activeElement !== firstInput) {
-                    firstInput.focus();
-                    firstInput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-            });
-        });
 
         // Инициализация при загрузке DOM
         document.addEventListener('DOMContentLoaded', function() {
@@ -922,4 +678,4 @@
         });
     </script>
 </body>
-</html>        
+</html>
