@@ -563,7 +563,6 @@
 
     <div id="successMessage" class="success-message">
         <i class="fas fa-check-circle"></i> PDF успешно сохранён!
-        <div class="progress-bar"><div class="progress-bar-inner"></div></div>
     </div>
 
     <div id="autoSaveIndicator" class="auto-save-indicator">
@@ -649,9 +648,6 @@
             // Create PDF
             const doc = new jsPDF();
             
-            // Устанавливаем шрифт, поддерживающий кириллицу
-            doc.setFont("helvetica");
-
             // Title
             doc.setFontSize(20);
             doc.text('Этика ИИ: Решение и рефлексия', 20, 30);
@@ -786,7 +782,7 @@
                     'yes-positive': 'Да, стал относиться более позитивно',
                     'yes-negative': 'Да, стал относиться более критично',
                     'no': 'Нет, мнение не изменилось',
-                    'complex': 'Мнение стало более сложным и нюансированным'
+                    'complex': 'Мнение стало более сложным и нюансирован'
                 };
                 doc.text(opinionLabels[answers.opinionChange] || answers.opinionChange, 20, yPosition);
                 yPosition += 15;
@@ -894,17 +890,6 @@
                 successMessage.classList.remove('show');
             }, 3000);
         }
-
-        // Плавная прокрутка к полям при клике на секцию
-        document.querySelectorAll('.case-section').forEach(section => {
-            section.addEventListener('click', function() {
-                const firstInput = this.querySelector('textarea, input, select');
-                if (firstInput && document.activeElement !== firstInput) {
-                    firstInput.focus();
-                    firstInput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-            });
-        });
 
         // Инициализация при загрузке DOM
         document.addEventListener('DOMContentLoaded', function() {
