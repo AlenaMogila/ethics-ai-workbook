@@ -15,7 +15,7 @@
     }
     
     body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #ff6b6b 0%, #c0392b 100%);
         color: #333;
         min-height: 100vh;
         padding: 20px;
@@ -245,15 +245,22 @@
             </select>
         </div>
 
+        <!-- ПЕРВЫЙ ОТДЕЛЬНЫЙ ВОПРОС -->
         <div class="case-section">
-            <h2><i class="fas fa-lightbulb"></i> Какой принцип(ы) этики цифровой среды нарушила компания GlowUP?</h2>
-            <textarea id="q5" placeholder="Какие этические правила должны регулировать использование ИИ в рекламе?"></textarea>
+            <h2><i class="fas fa-exclamation-triangle"></i> Нарушенные принципы этики</h2>
+            <textarea id="q5" placeholder="Какой принцип(ы) этики цифровой среды нарушила компания GlowUP?"></textarea>
         </div>
 
-        <!-- НОВЫЙ ОТДЕЛЬНЫЙ БЛОК ДЛЯ ПОСЛЕДНЕГО ВОПРОСА -->
+        <!-- ВТОРОЙ ОТДЕЛЬНЫЙ ВОПРОС -->
+        <div class="case-section">
+            <h2><i class="fas fa-gavel"></i> Этические правила для ИИ в рекламе</h2>
+            <textarea id="q6" placeholder="Какие этические правила должны регулировать использование ИИ в рекламе?"></textarea>
+        </div>
+
+        <!-- ТРЕТИЙ ОТДЕЛЬНЫЙ ВОПРОС -->
         <div class="case-section">
             <h2><i class="fas fa-edit"></i> Ваше решение</h2>
-            <textarea id="q6" placeholder="Что бы вы предложили сделать компании GlowUp для исправления ситуации? Опишите конкретные шаги..."></textarea>
+            <textarea id="q7" placeholder="Что бы вы предложили сделать компании GlowUp для исправления ситуации? Опишите конкретные шаги..."></textarea>
         </div>
 
         <div class="buttons">
@@ -314,7 +321,8 @@
                 q3: document.getElementById('q3').value,
                 q4: document.getElementById('q4').value,
                 q5: document.getElementById('q5').value,
-                q6: document.getElementById('q6').value, // Новый вопрос
+                q6: document.getElementById('q6').value,
+                q7: document.getElementById('q7').value,
                 checkboxes: {
                     normal: document.getElementById('normal').checked,
                     unethical: document.getElementById('unethical').checked,
@@ -325,7 +333,8 @@
             };
 
             // Проверка, есть ли хотя бы один ответ
-            const hasAnswers = answers.q2 || answers.q3 || answers.q4 || answers.q5 || answers.q6 ||
+            const hasAnswers = answers.q2 || answers.q3 || answers.q4 || answers.q5 || 
+                             answers.q6 || answers.q7 ||
                              answers.checkboxes.normal || answers.checkboxes.unethical || 
                              answers.checkboxes.dangerous || answers.checkboxes.other;
 
@@ -426,7 +435,13 @@
                 yPosition += 15;
             }
             
-            // Принципы этики
+            // Проверка необходимости новой страницы
+            if (yPosition > 230) {
+                doc.addPage();
+                yPosition = 30;
+            }
+            
+            // НАРУШЕННЫЕ ПРИНЦИПЫ ЭТИКИ
             doc.setFontSize(14);
             doc.text('Нарушенные принципы этики', 20, yPosition);
             yPosition += 10;
@@ -440,19 +455,33 @@
                 yPosition += 15;
             }
             
+            // ЭТИЧЕСКИЕ ПРАВИЛА ДЛЯ ИИ
+            doc.setFontSize(14);
+            doc.text('Этические правила для ИИ в рекламе', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
+            if (answers.q6) {
+                const lines = doc.splitTextToSize(answers.q6, 170);
+                doc.text(lines, 20, yPosition);
+                yPosition += lines.length * 5 + 10;
+            } else {
+                doc.text('Не заполнено', 20, yPosition);
+                yPosition += 15;
+            }
+            
             // Проверка необходимости новой страницы
             if (yPosition > 230) {
                 doc.addPage();
                 yPosition = 30;
             }
             
-            // РЕШЕНИЕ (новый отдельный вопрос)
+            // РЕШЕНИЕ
             doc.setFontSize(14);
             doc.text('Ваше решение для компании GlowUp', 20, yPosition);
             yPosition += 10;
             doc.setFontSize(10);
-            if (answers.q6) {
-                const lines = doc.splitTextToSize(answers.q6, 170);
+            if (answers.q7) {
+                const lines = doc.splitTextToSize(answers.q7, 170);
                 doc.text(lines, 20, yPosition);
             } else {
                 doc.text('Не заполнено', 20, yPosition);
@@ -475,7 +504,8 @@
                 q3: document.getElementById('q3').value,
                 q4: document.getElementById('q4').value,
                 q5: document.getElementById('q5').value,
-                q6: document.getElementById('q6').value, // Новый вопрос
+                q6: document.getElementById('q6').value,
+                q7: document.getElementById('q7').value,
                 normal: document.getElementById('normal').checked,
                 unethical: document.getElementById('unethical').checked,
                 dangerous: document.getElementById('dangerous').checked,
@@ -500,7 +530,8 @@
                 document.getElementById('q3').value = data.q3 || '';
                 document.getElementById('q4').value = data.q4 || '';
                 document.getElementById('q5').value = data.q5 || '';
-                document.getElementById('q6').value = data.q6 || ''; // Новый вопрос
+                document.getElementById('q6').value = data.q6 || '';
+                document.getElementById('q7').value = data.q7 || '';
                 document.getElementById('normal').checked = data.normal || false;
                 document.getElementById('unethical').checked = data.unethical || false;
                 document.getElementById('dangerous').checked = data.dangerous || false;
@@ -517,7 +548,8 @@
                 document.getElementById('q3').value = '';
                 document.getElementById('q4').value = '';
                 document.getElementById('q5').value = '';
-                document.getElementById('q6').value = ''; // Новый вопрос
+                document.getElementById('q6').value = '';
+                document.getElementById('q7').value = '';
                 document.getElementById('normal').checked = false;
                 document.getElementById('unethical').checked = false;
                 document.getElementById('dangerous').checked = false;
@@ -574,7 +606,5 @@
     </script>
 </body>
 </html>
-
-
       
             
