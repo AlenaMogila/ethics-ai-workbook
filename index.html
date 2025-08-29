@@ -1,45 +1,231 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Этика ИИ - Проект СТОИК</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            padding: 50px; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .menu { 
-            max-width: 500px; 
-            margin: 0 auto; 
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        .menu {
+            max-width: 600px;
+            width: 100%;
             background: white;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             color: #333;
+            animation: slideUp 0.8s ease-out;
         }
-        a { 
-            display: block; 
-            margin: 15px 0; 
-            padding: 15px; 
-            background: #667eea; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 8px;
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        a:hover { background: #5a67d8; }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .case-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .case-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .case-link:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .case-link i {
+            font-size: 1.2em;
+            width: 25px;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .menu {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.7em;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .case-link {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+
+        .featured {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
+        }
+
+        .featured:hover {
+            background: linear-gradient(135deg, #e55656, #d44a20) !important;
+        }
     </style>
 </head>
 <body>
-    <div class="menu">
-        <h1>🎓 Этика в компьютерном образовании для подростков 14-17 лет</h1>
-        
-        <a href="deepseek_html_20250828_0eb6a9.html">📝 Кейс 1: Реклама компании GlowUP (производитель косметики)</a>
-        <a href="solution-case.html">💡 Решение и рефлексия</a>
-        
-        <p style="margin-top: 30px; color: #666;">
-            © 2025 СТОИК | Для образовательных целей
-        </p>
+    <div class="header">
+        <div class="logo">🤖</div>
+        <h1>Проект СТОИК</h1>
+        <p>Этика в компьютерном образовании для подростков 14-17 лет</p>
     </div>
+    
+    <div class="menu">
+        <h1>
+            <span>🎓</span>
+            <span>Этика ИИ</span>
+        </h1>
+        
+        <div class="case-links">
+            <a href="deepseek_html_20250828_0eb6a9.html" class="case-link">
+                <i class="fas fa-ad"></i>
+                <span>Кейс 1: Манипуляция в рекламе (GlowUP)</span>
+            </a>
+            
+            <a href="solution-case.html" class="case-link">
+                <i class="fas fa-lightbulb"></i>
+                <span>Кейс 1: Решение и рефлексия</span>
+            </a>
+            
+            <a href="github-copilot-case.html" class="case-link featured">
+                <i class="fas fa-code"></i>
+                <span>Кейс 2: GitHub Copilot и этика программирования</span>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 СТОИК | Для образовательных целей | КИВО-2025</p>
+            <p style="margin-top: 10px; font-size: 0.8em; color: #888;">
+                Проект по этике искусственного интеллекта
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Добавляем интерактивность
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.case-link');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Добавляем анимацию нажатия
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                    
+                    // Небольшая задержка для анимации
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 150);
+                });
+            });
+            
+            // Проверяем наличие файлов
+            const filesToCheck = [
+                'deepseek_html_20250828_0eb6a9.html',
+                'solution-case.html', 
+                'github-copilot-case.html'
+            ];
+            
+            // Можно добавить проверку существования файлов
+            // и показать индикаторы загрузки
+        });
+    </script>
 </body>
 </html>
