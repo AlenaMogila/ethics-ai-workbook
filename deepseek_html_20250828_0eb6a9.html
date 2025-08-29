@@ -7,370 +7,80 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2em;
-            max-width: 600px;
-        }
-
-        .workbook {
-            max-width: 800px;
-            width: 100%;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-            animation: slideUp 0.8s ease-out;
-            margin-bottom: 30px;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1 {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            font-size: 2.2em;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .case-section {
-            padding: 30px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background-color 0.3s ease;
-        }
-
-        .case-section:hover {
-            background-color: #fafafa;
-        }
-
-        .case-section:last-of-type {
-            border-bottom: none;
-        }
-
-        h2 {
-            color: #2c3e50;
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h3 {
-            color: #34495e;
-            font-size: 1.1em;
-            margin: 20px 0 10px 0;
-            padding: 8px 12px;
-            background: #ecf0f1;
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
-        }
-
-        p {
-            color: #555;
-            margin-bottom: 15px;
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #17a2b8;
-        }
-
-        textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 14px;
-            resize: vertical;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            background: white;
-            cursor: pointer;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .checkbox-group label:hover {
-            background: #e9ecef;
-        }
-
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #667eea;
-            cursor: pointer;
-        }
-
-        .checkbox-group label input[type="text"] {
-            margin-left: 10px;
-            flex: 1;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            padding: 0 30px 30px;
-        }
-
-        button {
-            flex: 1;
-            padding: 18px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        #savePdf {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        #savePdf:hover {
-            background: linear-gradient(135deg, #5a67d8, #6b46c1);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        #resetForm {
-            background: #f8f9fa;
-            color: #6c757d;
-            border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
-        }
-
-        #resetForm:hover {
-            background: #e9ecef;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .workbook {
-                border-radius: 15px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-                padding: 20px;
-            }
-
-            .case-section {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 1.2em;
-            }
-            
-            .buttons {
-                flex-direction: column;
-                padding: 0 20px 20px;
-            }
-        }
-
-        .success-message {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #28a745;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .success-message.show {
-            transform: translateX(0);
-        }
-
-        .progress-bar {
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            border-radius: 0 0 10px 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar-inner {
-            height: 100%;
-            background: white;
-            width: 100%;
-            animation: progress 3s linear;
-        }
-
-        @keyframes progress {
-            from { width: 100%; }
-            to { width: 0%; }
-        }
-
-        .auto-save-indicator {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #17a2b8;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .auto-save-indicator.show {
-            opacity: 1;
-        }
-
-        footer {
-            color: white;
-            text-align: center;
-            margin-top: 20px;
-            opacity: 0.8;
-            font-size: 0.9em;
-        }
-            <style>
-        ... /* ваши предыдущие стили */
-        .header p {
-            text-align: center;
-        }
-    </style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        min-height: 100vh;
+        padding: 20px;
+    }
+    
+    .header {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .header h1 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-size: 2.2em;
+    }
+    
+    .header p {
+        font-size: 1.2em;
+        color: #7f8c8d;
+        margin: 0;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .case-section {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    
+    h2 { color: #2c3e50; margin-bottom: 15px; }
+    h3 { color: #34495e; margin-bottom: 12px; }
+    
+    p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+</style>
 </head>
 <body>
-    <div class="header" style="border-radius: 15px;">
-        <h1><i class="fas fa-brain"></i> Этические вопросы искусственного интеллекта: практикум</h1>
-        <p style="text-align: center; width: 100%;">Исследуйте кейс использования алгоритма в рекламе</p>
-    </div>
-    
-    <div class="workbook">
-        <h1>Кейс: таргетированная реклама</h1>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> Этические вопросы искусственного интеллекта: практикум</h1>
+            <p>Исследуйте кейс использования алгоритма в рекламе</p>
+        </div>
         
         <div class="case-section">
-            <h2><i class="fas fa-question-circle"></i> Что произошло?</h2>
-            <p>Компания «GlowUp» использует ИИ-алгоритм, который анализирует соцсети пользователей и их психологические профили для создания персонализированной рекламы косметики. Алгоритм выявляет неуверенность в себе и показывает рекламу с сообщениями типа "Ты недостаточно красива без нашего продукта". Продажи выросли на 300%, но увеличилось количество жалоб на депрессию среди молодых пользователей.</p>
-            <textarea id="q1" placeholder="Опишите ваше первое впечатление от этой ситуации"></textarea>
+            <h2>Кейс: таргетированная реклама</h2>
+            <h3>Что произошло?</h3>
+            <p>Компания «GlowUp» использует ИИ-алгоритм, который анализирует соцсети пользователей и их психологические профили для создания персонализированной рекламы косметики.<br>
+            Алгоритм выявляет неуверенность в себе и показывает рекламу с сообщениями типа "Ты недостаточно красива без нашего продукта". Продажи выросли на 300%, но увеличилось количество жалоб на депрессию среди молодых пользователей.</p>
         </div>
+    </div>
 
         <div class="case-section">
             <h2><i class="fas fa-balance-scale"></i> В чём дилемма?</h2>
