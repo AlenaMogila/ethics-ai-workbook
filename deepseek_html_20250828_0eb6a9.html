@@ -65,6 +65,142 @@
         margin-bottom: 15px;
         text-align: left;
     }
+
+    textarea, input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .checkbox-group label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin: 30px 0;
+    }
+
+    button {
+        padding: 15px 25px;
+        border: none;
+        border-radius: 8px;
+        background: #2c3e50;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background: #34495e;
+    }
+
+    .success-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        display: none;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+    }
+
+    .success-message.show {
+        display: flex;
+        animation: slideIn 0.3s ease;
+    }
+
+    .auto-save-indicator {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #6c757d;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        display: none;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+    }
+
+    .auto-save-indicator.show {
+        display: flex;
+        animation: slideIn 0.3s ease;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        color: white;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 2px;
+        margin-top: 5px;
+        overflow: hidden;
+    }
+
+    .progress-bar-inner {
+        height: 100%;
+        background: white;
+        width: 0%;
+        animation: progress 3s linear;
+    }
+
+    @keyframes progress {
+        from { width: 0%; }
+        to { width: 100%; }
+    }
 </style>
 </head>
 <body>
@@ -80,7 +216,6 @@
             <p>Компания «GlowUp» использует ИИ-алгоритм, который анализирует соцсети пользователей и их психологические профили для создания персонализированной рекламы косметики.<br>
             Алгоритм выявляет неуверенность в себе и показывает рекламу с сообщениями типа "Ты недостаточно красива без нашего продукта". Продажи выросли на 300%, но увеличилось количество жалоб на депрессию среди молодых пользователей.</p>
         </div>
-    </div>
 
         <div class="case-section">
             <h2><i class="fas fa-balance-scale"></i> В чём дилемма?</h2>
@@ -113,6 +248,12 @@
         <div class="case-section">
             <h2><i class="fas fa-lightbulb"></i> Какой принцип(ы) этики цифровой среды нарушила компания GlowUP?</h2>
             <textarea id="q5" placeholder="Какие этические правила должны регулировать использование ИИ в рекламе?"></textarea>
+        </div>
+
+        <!-- НОВЫЙ ОТДЕЛЬНЫЙ БЛОК ДЛЯ ПОСЛЕДНЕГО ВОПРОСА -->
+        <div class="case-section">
+            <h2><i class="fas fa-edit"></i> Ваше решение</h2>
+            <textarea id="q6" placeholder="Что бы вы предложили сделать компании GlowUp для исправления ситуации? Опишите конкретные шаги..."></textarea>
         </div>
 
         <div class="buttons">
@@ -150,7 +291,7 @@
         const otherCheckbox = document.getElementById('other-check');
         const otherText = document.getElementById('other-text');
 
-        // Связываем чекбокс "Другое" с текстовым поле
+        // Связываем чекбокс "Другое" с текстовым полем
         otherText.addEventListener('input', function() {
             if (this.value.trim() !== '') {
                 otherCheckbox.checked = true;
@@ -169,11 +310,11 @@
         function generatePDF() {
             // Сбор всех ответов
             const answers = {
-                q1: document.getElementById('q1').value,
                 q2: document.getElementById('q2').value,
                 q3: document.getElementById('q3').value,
                 q4: document.getElementById('q4').value,
                 q5: document.getElementById('q5').value,
+                q6: document.getElementById('q6').value, // Новый вопрос
                 checkboxes: {
                     normal: document.getElementById('normal').checked,
                     unethical: document.getElementById('unethical').checked,
@@ -184,7 +325,7 @@
             };
 
             // Проверка, есть ли хотя бы один ответ
-            const hasAnswers = answers.q1 || answers.q2 || answers.q3 || answers.q4 || answers.q5 || 
+            const hasAnswers = answers.q2 || answers.q3 || answers.q4 || answers.q5 || answers.q6 ||
                              answers.checkboxes.normal || answers.checkboxes.unethical || 
                              answers.checkboxes.dangerous || answers.checkboxes.other;
 
@@ -209,20 +350,6 @@
             doc.text(`Дата: ${date}`, 20, 45);
             
             let yPosition = 65;
-            
-            // Вопрос 1
-            doc.setFontSize(14);
-            doc.text('Что произошло? (Первое впечатление)', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q1) {
-                const lines = doc.splitTextToSize(answers.q1, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 10;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
             
             // Чекбоксы
             doc.setFontSize(14);
@@ -299,39 +426,56 @@
                 yPosition += 15;
             }
             
+            // Принципы этики
+            doc.setFontSize(14);
+            doc.text('Нарушенные принципы этики', 20, yPosition);
+            yPosition += 10;
+            doc.setFontSize(10);
+            if (answers.q5) {
+                const lines = doc.splitTextToSize(answers.q5, 170);
+                doc.text(lines, 20, yPosition);
+                yPosition += lines.length * 5 + 10;
+            } else {
+                doc.text('Не заполнено', 20, yPosition);
+                yPosition += 15;
+            }
+            
             // Проверка необходимости новой страницы
             if (yPosition > 230) {
                 doc.addPage();
                 yPosition = 30;
             }
             
-            // Решение
+            // РЕШЕНИЕ (новый отдельный вопрос)
             doc.setFontSize(14);
-            doc.text('Предложенное решение', 20, yPosition);
+            doc.text('Ваше решение для компании GlowUp', 20, yPosition);
             yPosition += 10;
             doc.setFontSize(10);
-            if (answers.q5) {
-                const lines = doc.splitTextToSize(answers.q5, 170);
+            if (answers.q6) {
+                const lines = doc.splitTextToSize(answers.q6, 170);
                 doc.text(lines, 20, yPosition);
             } else {
                 doc.text('Не заполнено', 20, yPosition);
             }
             
             // Сохранение PDF
-            doc.save('Этика_ИИ_Манипуляция_Ответы.pdf');
-            
-            // Показ сообщения об успехе
-            showSuccessMessage();
+            try {
+                doc.save('Этика_ИИ_Манипуляция_Ответы.pdf');
+                showSuccessMessage();
+            } catch (error) {
+                console.error('Ошибка при сохранении PDF:', error);
+                alert('Произошла ошибка при сохранении PDF. Пожалуйста, попробуйте еще раз.');
+            }
         }
 
         // Функция автосохранения
         function saveToLocalStorage() {
             const formData = {
-                q1: document.getElementById('q1').value,
                 q2: document.getElementById('q2').value,
                 q3: document.getElementById('q3').value,
                 q4: document.getElementById('q4').value,
                 q5: document.getElementById('q5').value,
+                q6: document.getElementById('q6').value, // Новый вопрос
                 normal: document.getElementById('normal').checked,
                 unethical: document.getElementById('unethical').checked,
                 dangerous: document.getElementById('dangerous').checked,
@@ -352,11 +496,11 @@
             const saved = localStorage.getItem('ethicsWorkbook');
             if (saved) {
                 const data = JSON.parse(saved);
-                document.getElementById('q1').value = data.q1 || '';
                 document.getElementById('q2').value = data.q2 || '';
                 document.getElementById('q3').value = data.q3 || '';
                 document.getElementById('q4').value = data.q4 || '';
                 document.getElementById('q5').value = data.q5 || '';
+                document.getElementById('q6').value = data.q6 || ''; // Новый вопрос
                 document.getElementById('normal').checked = data.normal || false;
                 document.getElementById('unethical').checked = data.unethical || false;
                 document.getElementById('dangerous').checked = data.dangerous || false;
@@ -369,11 +513,11 @@
         function resetForm() {
             if (confirm('Вы уверены, что хотите очистить все ответы? Это действие нельзя отменить.')) {
                 localStorage.removeItem('ethicsWorkbook');
-                document.getElementById('q1').value = '';
                 document.getElementById('q2').value = '';
                 document.getElementById('q3').value = '';
                 document.getElementById('q4').value = '';
                 document.getElementById('q5').value = '';
+                document.getElementById('q6').value = ''; // Новый вопрос
                 document.getElementById('normal').checked = false;
                 document.getElementById('unethical').checked = false;
                 document.getElementById('dangerous').checked = false;
@@ -430,3 +574,7 @@
     </script>
 </body>
 </html>
+
+
+      
+            
