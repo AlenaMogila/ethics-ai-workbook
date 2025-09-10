@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кейс 1: Таргетированная реклама - рабочая тетрадь</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js.map"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ */
         * {
             margin: 0;
             padding: 0;
@@ -40,7 +40,7 @@
         .header p {
             font-size: 1.2em;
             max-width: 600px;
-            margin: 0 auto; /* ДОБАВЛЕНО: выравнивание по центру */
+            margin: 0 auto;
         }
 
         .workbook {
@@ -78,11 +78,6 @@
         .case-section {
             padding: 30px;
             border-bottom: 1px solid #f0f0f0;
-            transition: background-color 0.3s ease;
-        }
-
-        .case-section:hover {
-            background-color: #fafafa;
         }
 
         .case-section:last-of-type {
@@ -126,13 +121,6 @@
             font-family: inherit;
             font-size: 14px;
             resize: vertical;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         input[type="text"] {
@@ -142,13 +130,6 @@
             border-radius: 8px;
             font-family: inherit;
             font-size: 14px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         select {
@@ -159,14 +140,6 @@
             font-family: inherit;
             font-size: 14px;
             background: white;
-            cursor: pointer;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .checkbox-group {
@@ -183,18 +156,12 @@
             background: #f8f9fa;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .checkbox-group label:hover {
-            background: #e9ecef;
         }
 
         input[type="checkbox"] {
             width: 18px;
             height: 18px;
             accent-color: #667eea;
-            cursor: pointer;
         }
 
         .checkbox-group label input[type="text"] {
@@ -216,9 +183,6 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -230,55 +194,10 @@
             color: white;
         }
 
-        #savePdf:hover {
-            background: linear-gradient(135deg, #5a67d8, #6b46c1);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
         #resetForm {
             background: #f8f9fa;
             color: #6c757d;
             border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
-        }
-
-        #resetForm:hover {
-            background: #e9ecef;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .workbook {
-                border-radius: 15px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-                padding: 20px;
-            }
-
-            .case-section {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 1.2em;
-            }
-            
-            .buttons {
-                flex-direction: column;
-                padding: 0 20px 20px;
-            }
         }
 
         .success-message {
@@ -290,59 +209,13 @@
             padding: 15px 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 10px;
         }
 
         .success-message.show {
-            transform: translateX(0);
-        }
-
-        .progress-bar {
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            border-radius: 0 0 10px 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar-inner {
-            height: 100%;
-            background: white;
-            width: 100%;
-            animation: progress 3s linear;
-        }
-
-        @keyframes progress {
-            from { width: 100%; }
-            to { width: 0%; }
-        }
-
-        .auto-save-indicator {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #17a2b8;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
             display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .auto-save-indicator.show {
-            opacity: 1;
         }
 
         footer {
@@ -375,7 +248,7 @@
                 <label><input type="checkbox" id="normal"> Это нормально - компании должны максимизировать прибыль</label>
                 <label><input type="checkbox" id="unethical"> Это неэтично - манипуляция уязвимостями людей</label>
                 <label><input type="checkbox" id="dangerous"> Это опасно - может причинить психологический вред</label>
-                <label><input type="checkbox" id="other-check"> Другое: <input type="text" id="other-text" placeholder="Ваш вариант..." oninput="handleOtherInput()"></label>
+                <label><input type="checkbox" id="other-check"> Другое: <input type="text" id="other-text" placeholder="Ваш вариант..."></label>
             </div>
         </div>
 
@@ -386,10 +259,10 @@
             <textarea id="q2" placeholder="Проанализируйте пользу и вред: кто выигрывает, кто проигрывает, каковы долгосрочные последствия?"></textarea>
             
             <h3>Этика добродетели (какие качества проявляет компания?)</h3>
-            <input type="text" id="q3" placeholder="Опишите мотивы компании тремя словами..." oninput="saveToLocalStorage()">
+            <input type="text" id="q3" placeholder="Опишите мотивы компании тремя словами...">
             
             <h3>Деонтология (есть ли нарушение моральных правил?)</h3>
-            <select id="q4" onchange="saveToLocalStorage()">
+            <select id="q4">
                 <option value="">-- Выберите ваш ответ --</option>
                 <option value="yes">Да, это обман и манипуляция</option>
                 <option value="no">Нет, это честная реклама</option>
@@ -398,7 +271,7 @@
         </div>
 
         <div class="buttons">
-            <button id="savePdf" title="Все ваши ответы будут сохранены в PDF">
+            <button id="savePdf">
                 <i class="fas fa-file-pdf"></i> Сохранить в PDF
             </button>
             <button id="resetForm">
@@ -409,11 +282,6 @@
 
     <div id="successMessage" class="success-message">
         <i class="fas fa-check-circle"></i> PDF успешно сохранён!
-        <div class="progress-bar"><div class="progress-bar-inner"></div></div>
-    </div>
-
-    <div id="autoSaveIndicator" class="auto-save-indicator">
-        <i class="fas fa-save"></i> Автосохранение...
     </div>
 
     <footer>
@@ -421,36 +289,8 @@
     </footer>
 
     <script>
-        // Инициализация jsPDF
-        const { jsPDF } = window.jspdf;
-        
-        // Элементы DOM
-        const successMessage = document.getElementById('successMessage');
-        const autoSaveIndicator = document.getElementById('autoSaveIndicator');
-        const savePdfButton = document.getElementById('savePdf');
-        const resetFormButton = document.getElementById('resetForm');
-        const otherCheckbox = document.getElementById('other-check');
-        const otherText = document.getElementById('other-text');
-
-        // ФИКС: Функция для обработки ввода в поле "Другое"
-        function handleOtherInput() {
-            if (otherText.value.trim() !== '') {
-                otherCheckbox.checked = true;
-            }
-            saveToLocalStorage();
-        }
-
-        // ФИКС: Обработка изменения чекбокса "Другое"
-        otherCheckbox.addEventListener('change', function() {
-            if (!this.checked) {
-                otherText.value = '';
-            }
-            saveToLocalStorage();
-        });
-
-        // Функция генерации PDF
+        // Простая функция для создания PDF
         function generatePDF() {
-            // Сбор всех ответов
             const answers = {
                 q1: document.getElementById('q1').value,
                 q2: document.getElementById('q2').value,
@@ -465,172 +305,72 @@
                 }
             };
 
-            // Проверка, есть ли хотя бы один ответ
-            const hasAnswers = answers.q1 || answers.q2 || answers.q3 || answers.q4 || 
-                             answers.checkboxes.normal || answers.checkboxes.unethical || 
-                             answers.checkboxes.dangerous || answers.checkboxes.other;
+            // Создаем HTML содержимое для PDF
+            const content = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { color: #2c3e50; }
+                        .answer { margin: 10px 0; padding: 10px; border-left: 4px solid #3498db; background: #f8f9fa; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Этика ИИ: Манипуляция в рекламе</h1>
+                    <p>Дата: ${new Date().toLocaleDateString('ru-RU')}</p>
+                    
+                    <h2>1. Что произошло? (Первое впечатление)</h2>
+                    <div class="answer">${answers.q1 || 'Не заполнено'}</div>
+                    
+                    <h2>2. В чём дилемма?</h2>
+                    <div class="answer">
+                        ${answers.checkboxes.normal ? '✓ Это нормально - компании должны максимизировать прибыль<br>' : ''}
+                        ${answers.checkboxes.unethical ? '✓ Это неэтично - манипуляция уязвимостями людей<br>' : ''}
+                        ${answers.checkboxes.dangerous ? '✓ Это опасно - может причинить психологический вред<br>' : ''}
+                        ${answers.checkboxes.other && answers.checkboxes.otherText ? `✓ Другое: ${answers.checkboxes.otherText}<br>` : ''}
+                        ${!answers.checkboxes.normal && !answers.checkboxes.unethical && !answers.checkboxes.dangerous && !answers.checkboxes.other ? 'Не заполнено' : ''}
+                    </div>
+                    
+                    <h2>3. Утилитаризм (польза vs вред)</h2>
+                    <div class="answer">${answers.q2 || 'Не заполнено'}</div>
+                    
+                    <h2>4. Этика добродетели (мотивы компании)</h2>
+                    <div class="answer">${answers.q3 || 'Не заполнено'}</div>
+                    
+                    <h2>5. Деонтология (нарушение правил)</h2>
+                    <div class="answer">
+                        ${answers.q4 === 'yes' ? 'Да, это обман и манипуляция' : 
+                          answers.q4 === 'no' ? 'Нет, это честная реклама' : 
+                          answers.q4 === 'partial' ? 'Частично - зависит от реализации' : 
+                          'Не заполнено'}
+                    </div>
+                </body>
+                </html>
+            `;
 
-            if (!hasAnswers) {
-                alert('Пожалуйста, заполните хотя бы один ответ перед сохранением.');
-                return;
-            }
-
-            // Создание PDF
-            const doc = new jsPDF();
+            // Открываем новое окно с содержимым для печати
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(content);
+            printWindow.document.close();
             
-            // Устанавливаем шрифт, поддерживающий кириллицу
-            doc.setFont("helvetica");
-
-            // Заголовок
-            doc.setFontSize(20);
-            doc.text('Этика ИИ: Манипуляция в рекламе', 20, 30);
-            
-            // Дата
-            doc.setFontSize(12);
-            const date = new Date().toLocaleDateString('ru-RU');
-            doc.text(`Дата: ${date}`, 20, 45);
-            
-            let yPosition = 65;
-            
-            // Вопрос 1
-            doc.setFontSize(14);
-            doc.text('Что произошло? (Первое впечатление)', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q1) {
-                const lines = doc.splitTextToSize(answers.q1, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 10;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Чекбоксы
-            doc.setFontSize(14);
-            doc.text('В чём дилемма?', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            
-            if (answers.checkboxes.normal) {
-                doc.text('✓ Это нормально - компании должны максимизировать прибыль', 20, yPosition);
-                yPosition += 7;
-            }
-            if (answers.checkboxes.unethical) {
-                doc.text('✓ Это неэтично - манипуляция уязвимостями людей', 20, yPosition);
-                yPosition += 7;
-            }
-            if (answers.checkboxes.dangerous) {
-                doc.text('✓ Это опасно - может причинить психологический вред', 20, yPosition);
-                yPosition += 7;
-            }
-            if (answers.checkboxes.other && answers.checkboxes.otherText) {
-                doc.text(`✓ Другое: ${answers.checkboxes.otherText}`, 20, yPosition);
-                yPosition += 7;
-            }
-            yPosition += 10;
-            
-            // Проверка необходимости новой страницы
-            if (yPosition > 250) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            
-            // Утилитаризм
-            doc.setFontSize(14);
-            doc.text('Утилитаризм (польза vs вред)', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q2) {
-                const lines = doc.splitTextToSize(answers.q2, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 10;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Этика добродетели
-            doc.setFontSize(14);
-            doc.text('Этика добродетели (мотивы компании)', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q3) {
-                doc.text(answers.q3, 20, yPosition);
-                yPosition += 15;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Деонтология
-            doc.setFontSize(14);
-            doc.text('Деонтология (нарушение правил)', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q4) {
-                const deontologyAnswers = {
-                    'yes': 'Да, это обман и манипуляция',
-                    'no': 'Нет, это честная реклама',
-                    'partial': 'Частично - зависит от реализации'
-                };
-                doc.text(deontologyAnswers[answers.q4] || answers.q4, 20, yPosition);
-                yPosition += 15;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Сохранение PDF
-            doc.save('Этика_ИИ_Манипуляция_Ответы.pdf');
-            
-            // Показ сообщения об успехе
-            showSuccessMessage();
-        }
-
-        // Функция автосохранения
-        function saveToLocalStorage() {
-            const formData = {
-                q1: document.getElementById('q1').value,
-                q2: document.getElementById('q2').value,
-                q3: document.getElementById('q3').value,
-                q4: document.getElementById('q4').value,
-                normal: document.getElementById('normal').checked,
-                unethical: document.getElementById('unethical').checked,
-                dangerous: document.getElementById('dangerous').checked,
-                otherCheck: document.getElementById('other-check').checked,
-                otherText: document.getElementById('other-text').value
-            };
-            localStorage.setItem('ethicsWorkbook', JSON.stringify(formData));
-            
-            // Показываем индикатор автосохранения
-            autoSaveIndicator.classList.add('show');
+            // Даем время на загрузку и затем предлагаем печать
             setTimeout(() => {
-                autoSaveIndicator.classList.remove('show');
-            }, 2000);
-        }
-
-        // Функция загрузки из localStorage
-        function loadFromLocalStorage() {
-            const saved = localStorage.getItem('ethicsWorkbook');
-            if (saved) {
-                const data = JSON.parse(saved);
-                document.getElementById('q1').value = data.q1 || '';
-                document.getElementById('q2').value = data.q2 || '';
-                document.getElementById('q3').value = data.q3 || '';
-                document.getElementById('q4').value = data.q4 || '';
-                document.getElementById('normal').checked = data.normal || false;
-                document.getElementById('unethical').checked = data.unethical || false;
-                document.getElementById('dangerous').checked = data.dangerous || false;
-                document.getElementById('other-check').checked = data.otherCheck || false;
-                document.getElementById('other-text').value = data.otherText || '';
-            }
+                printWindow.print();
+                printWindow.close();
+            }, 250);
+            
+            // Показываем сообщение об успехе
+            document.getElementById('successMessage').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('successMessage').classList.remove('show');
+            }, 3000);
         }
 
         // Функция сброса формы
         function resetForm() {
-            if (confirm('Вы уверены, что хотите очистить все ответы? Это действие нельзя отменить.')) {
-                localStorage.removeItem('ethicsWorkbook');
+            if (confirm('Вы уверены, что хотите очистить все ответы?')) {
                 document.getElementById('q1').value = '';
                 document.getElementById('q2').value = '';
                 document.getElementById('q3').value = '';
@@ -640,42 +380,24 @@
                 document.getElementById('dangerous').checked = false;
                 document.getElementById('other-check').checked = false;
                 document.getElementById('other-text').value = '';
-                
-                // Показываем сообщение об успехе
-                successMessage.innerHTML = '<i class="fas fa-trash"></i> Форма очищена!';
-                successMessage.style.background = '#6c757d';
-                showSuccessMessage();
-                
-                // Возвращаем исходное сообщение через 3 секунды
-                setTimeout(() => {
-                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> PDF успешно сохранён!';
-                    successMessage.style.background = '#28a745';
-                }, 3000);
             }
         }
 
-        // Функция показа сообщения об успехе
-        function showSuccessMessage() {
-            successMessage.classList.add('show');
-            setTimeout(() => {
-                successMessage.classList.remove('show');
-            }, 3000);
-        }
+        // Назначаем обработчики
+        document.getElementById('savePdf').addEventListener('click', generatePDF);
+        document.getElementById('resetForm').addEventListener('click', resetForm);
 
-        // Инициализация при загрузке DOM
-        document.addEventListener('DOMContentLoaded', function() {
-            loadFromLocalStorage();
-            
-            // Добавляем автосохранение для всех элементов формы
-            const formElements = document.querySelectorAll('textarea, input, select');
-            formElements.forEach(element => {
-                element.addEventListener('input', saveToLocalStorage);
-                element.addEventListener('change', saveToLocalStorage);
-            });
-            
-            // Назначаем обработчики кнопок
-            savePdfButton.addEventListener('click', generatePDF);
-            resetFormButton.addEventListener('click', resetForm);
+        // Обработка поля "Другое"
+        document.getElementById('other-text').addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                document.getElementById('other-check').checked = true;
+            }
+        });
+
+        document.getElementById('other-check').addEventListener('change', function() {
+            if (!this.checked) {
+                document.getElementById('other-text').value = '';
+            }
         });
     </script>
 </body>
