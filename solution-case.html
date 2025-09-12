@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кейс: таргетированная реклама - Решение и рефлексия</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -353,16 +352,14 @@
             padding: 15px 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 10px;
+            z-index: 1000;
         }
 
         .success-message.show {
-            transform: translateX(0);
+            display: flex;
         }
 
         .auto-save-indicator {
@@ -427,6 +424,22 @@
 
             .rating-option {
                 justify-content: center;
+            }
+        }
+
+        /* Стили для печати */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-content, .print-content * {
+                visibility: visible;
+            }
+            .print-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
             }
         }
     </style>
@@ -511,7 +524,7 @@
                 </select>
 
                 <h3><i class="fas fa-lightbulb"></i> Какие вопросы у вас остались?</h3>
-                <textarea id="remaining-questions" placeholder="Что бы вы хотели узнать дополнительно по этой теме?"></textarea>
+                <textarea id="remaining-questions" placeholder="Что бы вы хочете узнать дополнительно по этой теме?"></textarea>
 
                 <div class="anonymous-note">
                     <i class="fas fa-info-circle"></i> Ваши ответы помогают улучшить курс. Все данные обрабатываются анонимно.
@@ -529,7 +542,7 @@
                 </div>
                 
                 <div class="material-item">
-                    <strong><i class="fas fa-chart-bar"></i> Исследование:</strong> "Психология рекламы и её влияние на подростков" (исследовательский проект учеников 11 класса)
+                    <strong><i class="fas fa-chart-bar"></i> Исследование:</strong> "Психология реклама и её влияние на подростков" (исследовательский проект учеников 11 класса)
                     <a href="#" class="material-link">https://data.school9-nt.ru/gradeprojects/11/2021/1.pdf</a>
                 </div>
                 
@@ -574,9 +587,6 @@
     </footer>
 
     <script>
-        // Инициализация jsPDF
-        const { jsPDF } = window.jspdf;
-        
         // Элементы DOM
         const successMessage = document.getElementById('successMessage');
         const autoSaveIndicator = document.getElementById('autoSaveIndicator');
@@ -645,165 +655,118 @@
                 return;
             }
 
-            // Create PDF
-            const doc = new jsPDF();
+            // Create HTML content for PDF
+            const content = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Этика ИИ: Решение и рефлексия</title>
+                    <style>
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            padding: 30px; 
+                            line-height: 1.6;
+                            color: #333;
+                        }
+                        h1 { 
+                            color: #2c3e50; 
+                            text-align: center;
+                            margin-bottom: 10px;
+                        }
+                        h2 {
+                            color: #34495e;
+                            border-bottom: 2px solid #3498db;
+                            padding-bottom: 5px;
+                            margin-top: 30px;
+                        }
+                        h3 {
+                            color: #2c3e50;
+                            margin-top: 20px;
+                        }
+                        .answer { 
+                            margin: 15px 0; 
+                            padding: 15px; 
+                            border-left: 4px solid #3498db; 
+                            background: #f8f9fa;
+                            border-radius: 5px;
+                        }
+                        .section {
+                            margin-bottom: 30px;
+                        }
+                        .date {
+                            text-align: center;
+                            color: #666;
+                            margin-bottom: 30px;
+                        }
+                        .rating {
+                            font-weight: bold;
+                            color: #667eea;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Этика ИИ: Решение и рефлексия</h1>
+                    <div class="date">Дата: ${new Date().toLocaleDateString('ru-RU')}</div>
+                    
+                    <div class="section">
+                        <h2>ПРЕДЛОЖЕННЫЕ РЕШЕНИЯ</h2>
+                        
+                        <h3>1. Изменения алгоритма:</h3>
+                        <div class="answer">${answers.algorithmSolution || 'Не заполнено'}</div>
+                        
+                        <h3>2. Этические принципы:</h3>
+                        <div class="answer">${answers.ethicalPrinciples || 'Не заполнено'}</div>
+                        
+                        <h3>3. Защита уязвимых групп:</h3>
+                        <div class="answer">${answers.protectionMeasures || 'Не заполнено'}</div>
+                        
+                        <h3>4. Система контроля:</h3>
+                        <div class="answer">${answers.monitoringSystem || 'Не заполнено'}</div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>РЕФЛЕКСИЯ</h2>
+                        
+                        <h3>Сложность задания:</h3>
+                        <div class="answer">
+                            ${answers.difficulty ? 
+                                ['Очень легко', 'Легко', 'Средне', 'Сложно', 'Очень сложно'][parseInt(answers.difficulty) - 1] : 
+                                'Не заполнено'}
+                        </div>
+                        
+                        <h3>Самое трудное в анализе:</h3>
+                        <div class="answer">${answers.difficultAspect || 'Не заполнено'}</div>
+                        
+                        <h3>Изменение мнения:</h3>
+                        <div class="answer">
+                            ${answers.opinionChange === 'yes-positive' ? 'Да, стал относиться более позитивно' : 
+                              answers.opinionChange === 'yes-negative' ? 'Да, стал относиться более критично' : 
+                              answers.opinionChange === 'no' ? 'Нет, мнение не изменилось' : 
+                              answers.opinionChange === 'complex' ? 'Мнение стало более сложным и нюансированным' : 
+                              'Не заполнено'}
+                        </div>
+                        
+                        <h3>Оставшиеся вопросы:</h3>
+                        <div class="answer">${answers.remainingQuestions || 'Не заполнено'}</div>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            // Open print window
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(content);
+            printWindow.document.close();
             
-            // Title
-            doc.setFontSize(20);
-            doc.text('Этика ИИ: Решение и рефлексия', 20, 30);
-            
-            // Subtitle
-            doc.setFontSize(14);
-            doc.text('Кейс: Манипуляция в рекламе', 20, 40);
-            
-            // Date
-            doc.setFontSize(12);
-            const date = new Date().toLocaleDateString('ru-RU');
-            doc.text(`Дата: ${date}`, 20, 50);
-            
-            let yPosition = 65;
-            
-            // Solutions section
-            doc.setFontSize(14);
-            doc.text('ПРЕДЛОЖЕННЫЕ РЕШЕНИЯ', 20, yPosition);
-            yPosition += 15;
-            
-            // Algorithm solution
-            if (answers.algorithmSolution) {
-                doc.setFontSize(12);
-                doc.text('1. Изменения алгоритма:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines1 = doc.splitTextToSize(answers.algorithmSolution, 170);
-                doc.text(lines1, 20, yPosition);
-                yPosition += lines1.length * 5 + 10;
-            }
-            
-            // Check if we need a new page
-            if (yPosition > 250) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            
-            // Ethical principles
-            if (answers.ethicalPrinciples) {
-                doc.setFontSize(12);
-                doc.text('2. Этические принципы:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines2 = doc.splitTextToSize(answers.ethicalPrinciples, 170);
-                doc.text(lines2, 20, yPosition);
-                yPosition += lines2.length * 5 + 10;
-            }
-            
-            // Protection measures
-            if (answers.protectionMeasures) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('3. Защита уязвимых групп:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines3 = doc.splitTextToSize(answers.protectionMeasures, 170);
-                doc.text(lines3, 20, yPosition);
-                yPosition += lines3.length * 5 + 10;
-            }
-            
-            // Monitoring system
-            if (answers.monitoringSystem) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('4. Система контроля:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines4 = doc.splitTextToSize(answers.monitoringSystem, 170);
-                doc.text(lines4, 20, yPosition);
-                yPosition += lines4.length * 5 + 15;
-            }
-            
-            // Reflection section
-            if (yPosition > 200) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            
-            doc.setFontSize(14);
-            doc.text('РЕФЛЕКСИЯ', 20, yPosition);
-            yPosition += 15;
-            
-            // Difficulty rating
-            if (answers.difficulty) {
-                doc.setFontSize(12);
-                doc.text('Сложность задания:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const difficultyLabels = {
-                    '1': 'Очень легко',
-                    '2': 'Легко', 
-                    '3': 'Средне',
-                    '4': 'Сложно',
-                    '5': 'Очень сложно'
-                };
-                doc.text(difficultyLabels[answers.difficulty] || answers.difficulty, 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Difficult aspect
-            if (answers.difficultAspect) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('Самое трудное в анализе:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines5 = doc.splitTextToSize(answers.difficultAspect, 170);
-                doc.text(lines5, 20, yPosition);
-                yPosition += lines5.length * 5 + 10;
-            }
-            
-            // Opinion change
-            if (answers.opinionChange) {
-                if (yPosition > 240) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('Изменение мнения:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const opinionLabels = {
-                    'yes-positive': 'Да, стал относиться более позитивно',
-                    'yes-negative': 'Да, стал относиться более критично',
-                    'no': 'Нет, мнение не изменилось',
-                    'complex': 'Мнение стало более сложным и нюансирован'
-                };
-                doc.text(opinionLabels[answers.opinionChange] || answers.opinionChange, 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Remaining questions
-            if (answers.remainingQuestions) {
-                if (yPosition > 230) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('Оставшиеся вопросы:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines6 = doc.splitTextToSize(answers.remainingQuestions, 170);
-                doc.text(lines6, 20, yPosition);
-            }
-            
-            // Save the PDF
-            doc.save('Этика_ИИ_Решение_и_Рефлексия.pdf');
+            // Wait for content to load and then trigger print
+            setTimeout(() => {
+                printWindow.print();
+                // Don't close immediately to allow user to see the print dialog
+                setTimeout(() => {
+                    printWindow.close();
+                }, 100);
+            }, 250);
             
             // Show success message
             showSuccessMessage();
