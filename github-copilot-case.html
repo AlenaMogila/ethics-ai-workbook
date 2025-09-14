@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кейс 3: GitHub Copilot и этика программирования</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -319,12 +318,12 @@
             gap: 10px;
         }
 
-        #savePdf {
+        #printPage {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
         }
 
-        #savePdf:hover {
+        #printPage:hover {
             background: linear-gradient(135deg, #5a67d8, #6b46c1);
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
@@ -450,6 +449,50 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Стили для печати */
+        @media print {
+            body, html {
+                background: white !important;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .header, .buttons, footer, .success-message, .auto-save-indicator {
+                display: none !important;
+            }
+            
+            .workbook {
+                max-width: 100%;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                animation: none;
+            }
+            
+            h1 {
+                border-radius: 0;
+                margin: 0;
+                padding: 20px;
+                font-size: 1.8em;
+            }
+            
+            .case-section {
+                padding: 20px;
+                page-break-inside: avoid;
+            }
+            
+            textarea {
+                border: 1px solid #ccc;
+                background: #f9f9f9;
+                min-height: 80px;
+            }
+            
+            .option-card {
+                border: 1px solid #ccc;
+            }
+        }
     </style>
 </head>
 <body>
@@ -466,7 +509,7 @@
             <p>В 2021 году GitHub запустил Copilot — ИИ-помощника для программистов, основанного на модели от OpenAI. Copilot подсказывает, как дописать строку кода, предлагает целые функции и решения.</p>
             
             <div class="highlight-box">
-                <p>Но разработчики начали замечать, что Copilot иногда предлагаesт фрагменты кода из чужих open-source проектов, опубликованных на GitHub. В некоторых случаях — даже с авторскими комментариями и ошибками.</p>
+                <p>Но разработчики начали замечать, что Copilot иногда предлагает фрагменты кода из чужих open-source проектов, опубликованных на GitHub. В некоторых случаях — даже с авторскими комментариями и ошибками.</p>
             </div>
             
             <div class="code-snippet">
@@ -565,8 +608,8 @@ function calculateTax(income) {<br>
         </div>
 
         <div class="buttons">
-            <button id="savePdf" title="Сохранить все ответы в PDF">
-                <i class="fas fa-file-pdf"></i> Сохранить в PDF
+            <button id="printPage" title="Распечатать все ответы">
+                <i class="fas fa-print"></i> Печать / Сохранить как PDF
             </button>
             <button id="resetForm">
                 <i class="fas fa-redo"></i> Очистить форму
@@ -575,7 +618,7 @@ function calculateTax(income) {<br>
     </div>
 
     <div id="successMessage" class="success-message">
-        <i class="fas fa-check-circle"></i> PDF успешно сохранён!
+        <i class="fas fa-check-circle"></i> Готово к печати!
         <div class="progress-bar"><div class="progress-bar-inner"></div></div>
     </div>
 
@@ -588,168 +631,30 @@ function calculateTax(income) {<br>
     </footer>
 
     <script>
-        // Инициализация jsPDF
-        const { jsPDF } = window.jspdf;
-        
         // Элементы DOM
         const successMessage = document.getElementById('successMessage');
         const autoSaveIndicator = document.getElementById('autoSaveIndicator');
-        const savePdfButton = document.getElementById('savePdf');
+        const printPageButton = document.getElementById('printPage');
         const resetFormButton = document.getElementById('resetForm');
 
-        // Функция генерации PDF
-        function generatePDF() {
-            // Сбор всех ответов
-            const answers = {
-                q1: document.getElementById('q1').value,
-                q2: document.getElementById('q2').value,
-                q3: document.getElementById('q3').value,
-                reflection: document.getElementById('reflection').value,
-                selectedOption: document.querySelector('input[name="option"]:checked')?.value || '',
-                choiceExplanation: document.getElementById('choiceExplanation').value,
-                codeOfHonor: document.getElementById('codeOfHonor').value
-            };
-
+        // Функция печати
+        function printPage() {
             // Проверка, есть ли хотя бы один ответ
-            const hasAnswers = Object.values(answers).some(value => value && value.trim());
+            const hasAnswers = 
+                document.getElementById('q1').value.trim() || 
+                document.getElementById('q2').value.trim() || 
+                document.getElementById('q3').value.trim() || 
+                document.getElementById('reflection').value.trim() || 
+                document.getElementById('choiceExplanation').value.trim() || 
+                document.getElementById('codeOfHonor').value.trim();
 
             if (!hasAnswers) {
-                alert('Пожалуйста, заполните хотя бы один ответ перед сохранением.');
+                alert('Пожалуйста, заполните хотя бы один ответ перед печатью.');
                 return;
             }
 
-            // Создание PDF
-            const doc = new jsPDF();
-            
-            // Устанавливаем шрифт, поддерживающий кириллицу
-            doc.setFont("helvetica");
-
-            // Заголовок
-            doc.setFontSize(20);
-            doc.text('GitHub Copilot и этика программирования', 20, 30);
-            
-            // Дата
-            doc.setFontSize(12);
-            const date = new Date().toLocaleDateString('ru-RU');
-            doc.text(`Дата: ${date}`, 20, 45);
-            
-            let yPosition = 65;
-            
-            // Вопрос 1
-            doc.setFontSize(14);
-            doc.text('1. Использование готового решения от ИИ', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q1) {
-                const lines = doc.splitTextToSize(answers.q1, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 10;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Вопрос 2
-            doc.setFontSize(14);
-            doc.text('2. Публикация кода на конкурс', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q2) {
-                const lines = doc.splitTextToSize(answers.q2, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 10;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Проверка необходимости новой страницы
-            if (yPosition > 250) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            
-            // Вопрос 3
-            doc.setFontSize(14);
-            doc.text('3. Указание помощи ИИ', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.q3) {
-                const lines = doc.splitTextToSize(answers.q3, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 10;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Рефлексия
-            doc.setFontSize(14);
-            doc.text('Рефлексия: Собственный код в Copilot', 20, yPosition);
-            yPosition += 10;
-            doc.setFontSize(10);
-            if (answers.reflection) {
-                const lines = doc.splitTextToSize(answers.reflection, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 15;
-            } else {
-                doc.text('Не заполнено', 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Практическое задание
-            if (yPosition > 220) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            
-            doc.setFontSize(16);
-            doc.text('ПРАКТИЧЕСКОЕ ЗАДАНИЕ', 20, yPosition);
-            yPosition += 15;
-            
-            // Выбранный вариант
-            if (answers.selectedOption) {
-                doc.setFontSize(12);
-                doc.text('Выбранный вариант:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const optionLabels = {
-                    '1': 'Использую как есть, это же инструмент',
-                    '2': 'Перепишу своими словами',
-                    '3': 'Откажусь и напишу сам',
-                    '4': 'Использую, но укажу помощь ИИ'
-                };
-                doc.text(optionLabels[answers.selectedOption] || answers.selectedOption, 20, yPosition);
-                yPosition += 15;
-            }
-            
-            // Объяснение выбора
-            if (answers.choiceExplanation) {
-                doc.setFontSize(12);
-                doc.text('Объяснение выбора:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines = doc.splitTextToSize(answers.choiceExplanation, 170);
-                doc.text(lines, 20, yPosition);
-                yPosition += lines.length * 5 + 15;
-            }
-            
-            // Кодекс чести
-            if (answers.codeOfHonor) {
-                if (yPosition > 200) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.setFontSize(12);
-                doc.text('Кодекс чести использования ИИ:', 20, yPosition);
-                yPosition += 8;
-                doc.setFontSize(10);
-                const lines = doc.splitTextToSize(answers.codeOfHonor, 170);
-                doc.text(lines, 20, yPosition);
-            }
-            
-            // Сохранение PDF
-            doc.save('GitHub_Copilot_Этика_Ответы.pdf');
+            // Открываем диалог печати
+            window.print();
             
             // Показ сообщения об успехе
             showSuccessMessage();
@@ -825,7 +730,7 @@ function calculateTax(income) {<br>
                 
                 // Возвращаем исходное сообщение через 3 секунды
                 setTimeout(() => {
-                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> PDF успешно сохранён!';
+                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Готово к печати!';
                     successMessage.style.background = '#28a745';
                 }, 3000);
             }
@@ -868,7 +773,7 @@ function calculateTax(income) {<br>
             });
             
             // Назначаем обработчики кнопок
-            savePdfButton.addEventListener('click', generatePDF);
+            printPageButton.addEventListener('click', printPage);
             resetFormButton.addEventListener('click', resetForm);
             
             // Добавляем обработчики для радио-кнопок
